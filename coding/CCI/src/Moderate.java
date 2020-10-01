@@ -60,6 +60,58 @@ public class Moderate {
 		}
 		return diff;
 	}
+	
+	static // Operations : subtraction; Multiplication; division
+	// write methods to implements the multiply, divide and subtract for integers, use only add operator.
+	// implement negate method which flip the negative number to positive, and positive number to negative
+	int negate ( int num ) {
+		
+		int neg = 0;
+		int newNum = (num < 0) ? 1 : -1;
+		while ( num != 0 ) {
+			neg += newNum;
+			num += newNum;
+		}
+		
+		return neg;
+	}
+	
+	static int abs ( int num ) {
+		
+		if ( num < 0 ) {
+			return negate(num);
+		}
+		
+		return num;
+	}
+	
+	static // subtraction
+	int minus ( int a, int b ) {
+		return a + negate(b);
+	}
+	
+	static int multiply ( int a, int b ) {
+		if ( a < b ) {
+			return multiply(b,a);
+		}
+		
+		// for loop
+		int sum = 0;
+		for ( int i = abs(a); i > 0; i =  minus(i,1)) {
+			sum += b;
+		}
+		
+		if ( a < 0 ) {
+			return negate(sum);
+		}
+		return sum;
+	}
+	
+	static int divide ( int a, int b ) {
+		
+		return 0;
+	}
+	
 
 	public static void main ( String[] args ) {
 		
@@ -77,5 +129,10 @@ public class Moderate {
 		int[] array2 = {23,127,235,19,8};
 		System.out.println("smallestDifference: " + smallestDifference(array1,array2));
 		
+		// test negate
+		System.out.println("negate(-9) is " + negate(-9) + ", " + "negate(2) is " + negate(2)); 
+		// test minus operator
+		System.out.println("minus(-3,-4) is " + minus(-3,-4) + ", " + "minus(2, -9) is " + minus(2, -9) + ", " + "minus(-6, 9) is " + minus(-6, 9)); 
+		System.out.println("multiply(-3,-4) is " + multiply(-3,-4) + ", " + "multiply(2, -9) is " + multiply(2, -9) + ", " + "multiply(6, 9) is " + multiply(6, 9)); 
 	}
 }
