@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Moderate {
@@ -61,10 +62,10 @@ public class Moderate {
 		return diff;
 	}
 	
-	static // Operations : subtraction; Multiplication; division
+	// Operations : subtraction; Multiplication; division
 	// write methods to implements the multiply, divide and subtract for integers, use only add operator.
 	// implement negate method which flip the negative number to positive, and positive number to negative
-	int negate ( int num ) {
+	static int negate ( int num ) {
 		
 		int neg = 0;
 		int newNum = (num < 0) ? 1 : -1;
@@ -109,9 +110,57 @@ public class Moderate {
 	
 	static int divide ( int a, int b ) {
 		
-		return 0;
+		int a_abs = abs(a);
+		int b_abs = abs(b);
+		
+		if ( a_abs < b_abs ) {
+			return divide(b,a);
+		}
+		
+		int count = 0;
+		while (a_abs > 0 ) {
+			count++;
+			a_abs -= b_abs;
+		}
+		
+		if ( (a < 0 && b > 0) || (a > 0 && b < 0) ) {
+			return negate(count);
+		}
+		
+		return count;
 	}
 	
+	/*
+	 * 8.24 Pairs with Sum: 
+	 * Design an algorithm to find all pairs of integers within an array which sum to a specified value.
+	 * 
+	 */
+	public static ArrayList<ArrayList<Integer>> printPairSums ( int[] array, int sum ) {
+		Arrays.sort(array);
+		
+		ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+		ArrayList<Integer> temp = new ArrayList<>();
+		
+		int low = 0;
+		int high = array.length - 1;
+		
+		while ( low < high ) {
+			
+			if ( array[low] + array[high] == sum ) {
+				temp.add(array[low]);
+				temp.add(array[high]);
+				result.add(temp);
+				temp = new ArrayList<>();
+				high--;
+				low++;
+			} else if ( array[low] + array[high] < sum ) {
+				low++;
+			} else {
+				high--;
+			}
+		}
+		return result;
+	}
 
 	public static void main ( String[] args ) {
 		
@@ -131,8 +180,13 @@ public class Moderate {
 		
 		// test negate
 		System.out.println("negate(-9) is " + negate(-9) + ", " + "negate(2) is " + negate(2)); 
-		// test minus operator
 		System.out.println("minus(-3,-4) is " + minus(-3,-4) + ", " + "minus(2, -9) is " + minus(2, -9) + ", " + "minus(-6, 9) is " + minus(-6, 9)); 
-		System.out.println("multiply(-3,-4) is " + multiply(-3,-4) + ", " + "multiply(2, -9) is " + multiply(2, -9) + ", " + "multiply(6, 9) is " + multiply(6, 9)); 
+		System.out.println("multiply(-3,-4) is " + multiply(-3,-4) + ", " + "multiply(2, -9) is " + multiply(2, -9) + ", " + "multiply(6, 9) is " + multiply(6, 9));
+		System.out.println("divide(-2,-4) is " + divide(-2,-4) + ", " + "divide(3, -9) is " + divide(3, -9) + ", " + "divide(18, 9) is " + divide(18, 9)); 
+		
+		// test pairs with sum
+		int[] arrayPS = {-2, -1, 0, 3, 5, 6, 7, 9, 13, 14};
+		System.out.println(printPairSums(arrayPS, 7));
+		
 	}
 }
