@@ -16,7 +16,9 @@ public class Moderate {
 		return array;
 	}
 	 
-	 // Factorial zeros
+	 /*
+	  * 16.5 Factorial zeros: write a function that computes the number of trailing zeros in n factorial.  
+	  */
 	static int factorialZeros (int num) {
 			
 		// to count the number of trailing zeros, we need to count the pairs of multiples of 5 and 2; there will be more multiples of 2 than 5, 
@@ -29,7 +31,7 @@ public class Moderate {
 		return count;
 	}
 	
-	
+	// helper 
 	static int countfactOf5(int i) {
 		// TODO Auto-generated method stub
 		int count = 0;
@@ -40,7 +42,9 @@ public class Moderate {
 		return count;
 	}
 	
-	// smallest difference
+	/*
+	 * 16.6 smallest difference: Given two arrays, write a function that returns the pair of values with the smallest difference 
+	 */
 	public static int smallestDifference (int[] array1, int[] array2) {
 		
 		Arrays.sort(array1);
@@ -253,7 +257,7 @@ public class Moderate {
 		//System.out.println(printPairSums(arrayPS, 7));
 		
 		/*
-		 *  16.21 Sum Swao
+		 *  16.21 Sum Swap
 		 */
 		int[] array1 = {4, 1, 2, 1, 1, 2};
 		int[] array2 = {3, 6, 3, 3};
