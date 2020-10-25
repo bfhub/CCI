@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 public class Moderate {
 
-	// Number Swapper
-	// swap a number in place
+	/*
+	 * 16.1 Number Swapper: write a function to swap two numbers in place.
+	 */
 	static int[] numberSwapper (int[] array) {
 		
 		array[0] = array[0]^array[1];
@@ -131,7 +133,69 @@ public class Moderate {
 	}
 	
 	/*
-	 * 8.24 Pairs with Sum: 
+	 * 16.21 Sum Swap Given two arrays, find a pair of values (one value from each array) that you can
+	 * swap to give the two arrays the same sum.
+	 * 
+	 * 		1. the target sum is (sum1 + sum2 / 2 (which sumx is the sum of each array)
+	 * 			1.1. getTargetSum(array1, array2)
+	 * 
+	 * 		2. use a HashSet to drop the duplicates of one of the arrays
+	 * 			2.1 getContents(arrayx)
+	 * 
+	 */
+	public static int[] sumSwap (int[] array1, int[] array2) {
+		
+		int[] result = new int[2];
+		
+		Integer target = getTarget(array1, array2);
+		if ( target == null ) {
+			return null;
+		}
+		
+		HashSet<Integer> set = getContents(array2);
+		
+		for ( int one = 0; one < array1.length; one++ ) {
+			int two = target - sum(array1) + array1[one];
+			if (set.contains(two)) {
+				result[0] = array1[one];
+				result[1] = two;
+			}		
+		}	
+		return result != null ? result : null ;
+	}
+	
+	private static HashSet<Integer> getContents(int[] array2) {
+		HashSet<Integer> set = new HashSet<>();
+		
+		for ( int i = 0; i < array2.length; i++) {
+			set.add(array2[i]);
+		}
+		return set;
+	}
+
+	private static Integer getTarget(int[] array1, int[] array2) {
+		int sum1 = sum(array1);
+		int sum2 = sum(array2);
+		
+		if (( sum1 + sum2) % 2 != 0 )
+			return null;
+		
+		return ( sum1 + sum2) / 2;
+	}
+	
+
+	private static Integer sum(int[] array1) {
+		Integer sum = 0;
+		
+		for ( int i = 0; i < array1.length; i++ ) {
+			sum += array1[i];
+		}
+		
+		return sum;
+	}
+
+	/*
+	 * 16.24 Pairs with Sum: 
 	 * Design an algorithm to find all pairs of integers within an array which sum to a specified value.
 	 * 
 	 */
@@ -165,28 +229,54 @@ public class Moderate {
 	public static void main ( String[] args ) {
 		
 		// number swapper
-		int[] input = {4, 9};
-		int[] output = numberSwapper(input);
-		System.out.println(output[0]);
-		System.out.println(output[1]);
+		//int[] input = {4, 9};
+		//int[] output = numberSwapper(input);
+		//System.out.println(output[0]);
+		//System.out.println(output[1]);
 		
 		// Factorial zeros
-		System.out.println("factorialZeros: " + factorialZeros(19));
+		//System.out.println("factorialZeros: " + factorialZeros(19));
 		
 		// smallest difference
-		int[] array1 = {1,3,15,11,2};
-		int[] array2 = {23,127,235,19,8};
-		System.out.println("smallestDifference: " + smallestDifference(array1,array2));
+		//int[] array1 = {1,3,15,11,2};
+		//int[] array2 = {23,127,235,19,8};
+		//System.out.println("smallestDifference: " + smallestDifference(array1,array2));
 		
 		// test negate
-		System.out.println("negate(-9) is " + negate(-9) + ", " + "negate(2) is " + negate(2)); 
-		System.out.println("minus(-3,-4) is " + minus(-3,-4) + ", " + "minus(2, -9) is " + minus(2, -9) + ", " + "minus(-6, 9) is " + minus(-6, 9)); 
-		System.out.println("multiply(-3,-4) is " + multiply(-3,-4) + ", " + "multiply(2, -9) is " + multiply(2, -9) + ", " + "multiply(6, 9) is " + multiply(6, 9));
-		System.out.println("divide(-2,-4) is " + divide(-2,-4) + ", " + "divide(3, -9) is " + divide(3, -9) + ", " + "divide(18, 9) is " + divide(18, 9)); 
+		//System.out.println("negate(-9) is " + negate(-9) + ", " + "negate(2) is " + negate(2)); 
+		//System.out.println("minus(-3,-4) is " + minus(-3,-4) + ", " + "minus(2, -9) is " + minus(2, -9) + ", " + "minus(-6, 9) is " + minus(-6, 9)); 
+		//System.out.println("multiply(-3,-4) is " + multiply(-3,-4) + ", " + "multiply(2, -9) is " + multiply(2, -9) + ", " + "multiply(6, 9) is " + multiply(6, 9));
+		//System.out.println("divide(-2,-4) is " + divide(-2,-4) + ", " + "divide(3, -9) is " + divide(3, -9) + ", " + "divide(18, 9) is " + divide(18, 9)); 
 		
 		// test pairs with sum
-		int[] arrayPS = {-2, -1, 0, 3, 5, 6, 7, 9, 13, 14};
-		System.out.println(printPairSums(arrayPS, 7));
+		//int[] arrayPS = {-2, -1, 0, 3, 5, 6, 7, 9, 13, 14};
+		//System.out.println(printPairSums(arrayPS, 7));
+		
+		/*
+		 *  16.21 Sum Swao
+		 */
+		int[] array1 = {4, 1, 2, 1, 1, 2};
+		int[] array2 = {3, 6, 3, 3};
+		
+		// sum 
+		System.out.println("sum1 is: " + sum(array1));
+		System.out.println("sum2 is: " + sum(array2));
+		
+		// getTarget
+		Integer target = getTarget(array1, array2);
+		System.out.println("target is: " + target);
+		
+		// getContents
+		System.out.println("set is: " + getContents(array2));
+		int[] result = sumSwap(array1, array2);
+		if (result == null ) {
+			System.out.println("result is null.");
+		} else {
+			for ( int i = 0; i < result.length; i++ ) {
+				System.out.println(result[i] + " ");
+			}
+		}
+		
 		
 	}
 }
